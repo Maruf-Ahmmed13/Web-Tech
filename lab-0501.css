@@ -1,0 +1,93 @@
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    /* Use margin to separate the body from the edges (Step 5) */
+    margin: 1em; 
+    padding: 0;
+    text-align: center; /* Center-align content for a clean look */
+}
+
+/* Header Styling */
+header {
+    background-color: #004d40;
+    color: white;
+    padding: 20px 0; /* Use px (Step 6) */
+    /* Use margin to separate header (Step 5) */
+    margin-bottom: 25px; 
+}
+
+header h1 {
+    font-size: 2em; /* Use em (Step 6) */
+    margin: 0;
+}
+
+header h2 {
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 5px 0 0;
+}
+
+/* Profile Section Styling */
+.profile-section {
+    /* Step 8: Add a light background color */
+    background-color: #ffffff;
+    
+    /* Step 4 & 5: Fixed width for centering */
+    width: 80%; /* Use % (Step 6) */
+    max-width: 700px; 
+    
+    /* Step 4: Center-align the section using margin: auto */
+    margin: 0 auto;
+    
+    /* Step 5: Add a border around the section */
+    border: 3px solid #004d40;
+    
+    /* Step 5: Add padding inside the profile box */
+    padding: 30px; /* Use px (Step 6) */
+    
+    /* Optional: Slight shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    /* Optional: Rounded corners for the box */
+    border-radius: 10px;
+    
+    text-align: left; /* Reset text alignment inside the box */
+}
+
+/* Student Photo Styling */
+.profile-photo {
+    /* Step 7: Round the student image corners */
+    border-radius: 50%; /* Makes the image a circle */
+    display: block; /* Allows margin: auto to work */
+    margin: 0 auto 20px auto; /* Center the image and add bottom margin */
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* Ensures image covers the area without distortion */
+    border: 4px solid #388e3c; /* A nice border around the image */
+}
+
+/* Info and Bio Section Spacing */
+.info, .bio {
+    /* Use margin to separate each section (Step 5) */
+    margin-bottom: 25px; 
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.bio h3 {
+    margin-top: 0;
+    color: #004d40;
+}
+
+/* Footer Styling */
+footer {
+    /* Use margin to separate footer (Step 5) */
+    margin-top: 25px; 
+    padding: 15px;
+    background-color: #333;
+    color: #cccccc;
+    font-size: 0.9em;
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}

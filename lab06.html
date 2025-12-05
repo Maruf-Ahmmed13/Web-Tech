@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Book Entry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl p-6 md:p-10">
+        <h1 class="text-3xl font-bold text-center text-indigo-700 mb-8">
+            Library Management: Add New Book
+        </h1>
+
+        <section class="mb-10 p-6 border-2 border-indigo-200 rounded-lg bg-indigo-50">
+            <h2 class="text-xl font-semibold text-indigo-600 mb-4">Book Entry</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="bookTitle" class="block text-sm font-medium text-gray-700 mb-1">Book Title (Alphabetic Only)</label>
+                    <input type="text" id="bookTitle" placeholder="e.g., TheGreatGatsby"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    <p id="titleError" class="text-red-500 text-xs mt-1 h-4"></p>
+                </div>
+
+                <div>
+                    <label for="publicationYear" class="block text-sm font-medium text-gray-700 mb-1">Publication Year (1900 - Current)</label>
+                    <input type="number" id="publicationYear" placeholder="e.g., 1925" min="1900" 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+                    <p id="yearError" class="text-red-500 text-xs mt-1 h-4"></p>
+                </div>
+            </div>
+
+            <button id="addBookBtn" 
+                    class="mt-6 w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition duration-200 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
+                Add Book
+            </button>
+        </section>
+
+        <section class="mt-10">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Current Inventory</h2>
+            
+            <div class="overflow-x-auto shadow-md rounded-lg border border-gray-200">
+                <table id="bookTable" class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tl-lg">Title</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tr-lg">Year</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookListBody" class="bg-white divide-y divide-gray-200">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const titleInput = document.getElementById('bookTitle');
+        const yearInput = document.getElementById('publicationYear');
+        const addBookBtn = document.getElementById('addBookBtn');
+        const bookListBody = document.getElementById('bookListBody');
+        const titleError = document.getElementById('titleError');
+        const yearError = document.getElementById('yearError');
+
+        const currentYear = new Date().getFullYear();
+
+        function clearErrors() {
+            titleError.textContent = '';
+            yearError.textContent = '';
+        }
+
+        function validateTitle(title) {
+            clearErrors();
+            if (!title) {
+                titleError.textContent = 'Title cannot be empty.';
+                return false;
+            }
+            
+            if (!/^[a-zA-Z]+$/.test(title)) {
+                titleError.textContent = 'Title must contain only alphabetic characters (no numbers, spaces, or special characters).';
+                return false;
+            }
+            return true;
+        }
+
+        function validateYear(yearStr) {
+            clearErrors();
+            const year = parseInt(yearStr);
+
+            if (isNaN(year) || yearStr.length !== 4) {
+                yearError.textContent = 'Year must be a valid four-digit number.';
+                return false;
+            }
+            if (year < 1900 || year > currentYear) {
+                yearError.textContent = `Year must be between 1900 and ${currentYear}.`;
+                return false;
+            }
+            return true;
+        }
+
+        function addBook() {
+            const title = titleInput.value.trim();
+            const yearStr = yearInput.value.trim();
+            const year = parseInt(yearStr);
+
+            const isTitleValid = validateTitle(title);
+            const isYearValid = validateYear(yearStr);
+            
+            if (!isTitleValid || !isYearValid) {
+                return; 
+            }
+
+            let rowClass = 'bg-white hover:bg-gray-50'; 
+            if (year < 2000) {
+                rowClass = 'bg-gray-100 hover:bg-gray-200';
+            } else {
+                rowClass = 'bg-green-50 hover:bg-green-100';
+            }
+
+            const newRow = document.createElement('tr');
+            newRow.className = `border-b transition duration-150 ${rowClass}`;
+
+            const titleCell = document.createElement('td');
+            titleCell.className = 'px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900';
+            titleCell.textContent = title;
+
+            const yearCell = document.createElement('td');
+            yearCell.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-500';
+            yearCell.textContent = yearStr;
+
+            newRow.appendChild(titleCell);
+            newRow.appendChild(yearCell);
+
+            bookListBody.appendChild(newRow);
+
+            titleInput.value = '';
+            yearInput.value = '';
+            clearErrors(); 
+        }
+
+        addBookBtn.addEventListener('click', addBook);
+
+        titleInput.addEventListener('input', clearErrors);
+        yearInput.addEventListener('input', clearErrors);
+
+    </script>
+
+</body>
+</html>
